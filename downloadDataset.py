@@ -1,11 +1,17 @@
 import requests
 import pathlib
+import os
 import sys
 
 
 def download_database():
     url = 'https://storage.googleapis.com/mledu-datasets/cats_and_dogs_filtered.zip'
+
     save_path = f'{pathlib.Path().absolute()}/cats_and_dogs_filtered.zip'
+    if os.path.exists('cats_and_dogs_filtered.zip'):
+        print('File Exists!')
+        return (pathlib.Path().absolute(), save_path,)
+
     r = requests.get(url, stream=True)
     with open(save_path, 'wb') as fd:
         total_length = r.headers.get('content-length')
